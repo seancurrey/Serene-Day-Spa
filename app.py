@@ -20,8 +20,6 @@ ai_magic = {
     'img\\success kid.jpg': ['First time voting','Picked the winner'],
 }
 
-sdfsdf sdf 
-
 # Main function
 def main():
     st.title("Meme Maker")
