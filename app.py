@@ -9,8 +9,8 @@ def load_image(image_path):
 
 # Predefined meme templates in the img folder
 img_folder = "img"
-trending_templates = [os.path.join(img_folder, img) for img in ["bernie.jpg", "grumpy cat.jpg", "awkward penguin.jpg"]]
-favorites_templates = [os.path.join(img_folder, img) for img in ["philosoraptor.jpg", "success kid.jpg"]]
+trending_templates = [os.path.join(img_folder, img) for img in ["grumpy cat.jpg", "awkward penguin.jpg", "philosoraptor.jpg",]]
+favorites_templates = [os.path.join(img_folder, img) for img in ["bernie.jpg", "success kid.jpg"]]
 
 ai_magic = {
     'img\\bernie.jpg': ['I am once again asking','for you to vote'],
