@@ -3,9 +3,6 @@ from PIL import Image, ImageDraw, ImageFont
 import os
 import time
 
-# Function to load images from a local directory
-def load_image(image_path):
-    return Image.open(image_path)
 
 # Predefined meme templates in the img folder
 trending_templates = ["grumpy cat.jpg", "awkward penguin.jpg", "philosoraptor.jpg",]
@@ -59,6 +56,9 @@ def main():
 # meme maker
 def meme_maker(step):
     if step == 0:
+        st.session_state.template = ''
+        st.session_state.top_text = ''
+        st.session_state.bottom_text = ''
         view_select()
     if step == 1:
         meme_tempaltes()
@@ -116,19 +116,20 @@ def meme_tempaltes():
     with col61:
         st.write(' ')
         if st.button('Go', type='primary'):
-            if search_query == 'advice':
+            if search_query:
                 st.session_state.searched = 1
         
     if st.session_state.searched == 1:
-        for result in results:
-            st.image(result, use_column_width=True)
-            if st.button(os.path.basename(result), key=result):
-                st.session_state.template = result
-                st.session_state.step = 2
-                st.session_state.mode = "search"
-                st.write(st.session_state.template )
-                st.session_state.searched = 0
-                st.rerun()
+        if search_query == 'advice':
+            for result in results:
+                st.image(result, use_column_width=True)
+                if st.button(os.path.basename(result), key=result):
+                    st.session_state.template = result
+                    st.session_state.step = 2
+                    st.session_state.mode = "search"
+                    st.write(st.session_state.template )
+                    st.session_state.searched = 0
+                    st.rerun()
         else:
             st.write('No results')
 
@@ -171,10 +172,6 @@ def meme_editing():
             else:
                 set_text(form_top_text, form_bottom_text)
                 st.session_state.step = 3
-                st.session_state.top_text = ''
-                st.session_state.bottom_text = ''
-                st.session_state.template = ''
-                form_top_text = ''
                 st.rerun()
 
     if st.button("Back"):
