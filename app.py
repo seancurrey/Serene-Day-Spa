@@ -171,6 +171,9 @@ def meme_editing():
             else:
                 set_text(form_top_text, form_bottom_text)
                 st.session_state.step = 3
+                st.session_state.top_text = ''
+                st.session_state.bottom_text = ''
+                st.session_state.template = ''
                 st.rerun()
 
     if st.button("Back"):
