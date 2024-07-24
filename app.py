@@ -8,19 +8,18 @@ def load_image(image_path):
     return Image.open(image_path)
 
 # Predefined meme templates in the img folder
-img_folder = "img"
-trending_templates = [os.path.join(img_folder, img) for img in ["grumpy cat.jpg", "awkward penguin.jpg", "philosoraptor.jpg",]]
-favorites_templates = [os.path.join(img_folder, img) for img in ["bernie.jpg", "success kid.jpg"]]
-search_templates = [os.path.join(img_folder, img) for img in ["search/Advice-Dog.jpg", "search/bad-advice-cat.jpg"]]
+trending_templates = ["grumpy cat.jpg", "awkward penguin.jpg", "philosoraptor.jpg",]
+favorites_templates = ["bernie.jpg", "success kid.jpg"]
+search_templates = ["Advice-Dog.jpg", "bad-advice-cat.jpg"]
 
 ai_magic = {
-    'img\\bernie.jpg': ['I am once again asking','for you to vote'],
-    'img\\grumpy cat.jpg': ['There are two political parties','and they are both bad'],
-    'img\\awkward penguin.jpg': ['Mailed in my ballot','On November 6th'],
-    'img\\philosoraptor.jpg': ['If voting is right','Why does it feel so wrong this year'],
-    'img\\success kid.jpg': ['First time voting','Picked the winner'],
-    'img\\search/Advice-Dog.jpg': ['Don\'t forget your','mail in ballot!'],
-    'img\\search/bad-advice-cat.jpg': ['Wait till the last minute','Before reading about the candidates'],
+    'bernie.jpg': ['I am once again asking','for you to vote'],
+    'grumpy cat.jpg': ['There are two political parties','and they are both bad'],
+    'awkward penguin.jpg': ['Mailed in my ballot','On November 6th'],
+    'philosoraptor.jpg': ['If voting is right','Why does it feel so wrong this year'],
+    'success kid.jpg': ['First time voting','Picked the winner'],
+    'Advice-Dog.jpg': ['Don\'t forget your','mail in ballot!'],
+    'bad-advice-cat.jpg': ['Wait till the last minute','Before reading about the candidates'],
 }
 
 # Main function
@@ -52,7 +51,7 @@ def main():
         collab_base()
     else:
         with col1:
-            st.image('img/slide.png', use_column_width='auto')
+            st.image('slide.png', use_column_width='auto')
 
         with col2:
             meme_maker(st.session_state.step)
@@ -136,6 +135,7 @@ def meme_tempaltes():
     if st.button('Back'):
         st.session_state.step = 0
         st.session_state.searched = 0
+        st.session_state.tempalte = ''
         st.rerun()
 
 def meme_editing():
@@ -177,6 +177,7 @@ def meme_editing():
         st.session_state.step = 1
         st.session_state.top_text = ''
         st.session_state.bottom_text = ''
+        st.session_state.template = ''
         st.rerun()
 
 
@@ -279,13 +280,13 @@ def vibe_search():
                 st.rerun()
     
     if st.session_state.vibe == 'exciting':
-        memes = ['img/vibe/exciting/exciting1.jpg',
-        'img/vibe/exciting/exciting2.jpg',
-        'img/vibe/exciting/exciting3.jpg']
+        memes = ['exciting1.jpg',
+        'exciting2.jpg',
+        'exciting3.jpg']
     elif st.session_state.vibe == 'sad':
-        memes = ['img/vibe/sad/sad1.jpg',
-        'img/vibe/sad/sad2.jpg',
-        'img/vibe/sad/sad3.jpg']
+        memes = ['sad1.jpg',
+        'sad2.jpg',
+        'sad3.jpg']
     else:
         memes = []
         
@@ -335,7 +336,7 @@ def collab_base():
         if len(st.session_state.template) > 0:
             st.image(st.session_state.template, use_column_width=True)
         else:
-            st.image('img/slide2.png', use_column_width='auto')
+            st.image('slide2.png', use_column_width='auto')
     
     with col31:
         votes1 = [6,0,0,2]
@@ -347,17 +348,17 @@ def collab_base():
             display_collab_memes(votes1, votes2, votes3)
 
 def display_collab_memes(votes1, votes2, votes3):
-    memes = ['img/collab/collab1.jpg',
-    'img/collab/collab2.jpg',
-    'img/collab/collab3.jpg',
+    memes = ['collab1.jpg',
+    'collab2.jpg',
+    'collab3.jpg',
     ]
 
     for meme in memes:
-        if meme == 'img/collab/collab1.jpg':
+        if meme == 'collab1.jpg':
             votes(votes1[0],votes1[1],votes1[2],votes1[3])
-        elif meme == 'img/collab/collab2.jpg':
+        elif meme == 'collab2.jpg':
             votes(votes2[0],votes2[1],votes2[2],votes2[3])
-        elif meme == 'img/collab/collab3.jpg':
+        elif meme == 'collab3.jpg':
             votes(votes3[0],votes3[1],votes3[2],votes3[3])
         
         st.image(meme, use_column_width=True)
@@ -371,11 +372,11 @@ def display_collab_memes(votes1, votes2, votes3):
         st.rerun()
 
 def display_comments(votes1, votes2, votes3):
-    if st.session_state.template == 'img/collab/collab1.jpg':
+    if st.session_state.template == 'collab1.jpg':
         votes(votes1[0],votes1[1],votes1[2],votes1[3])
         comment('Jim', 'good choice!', '👍')
         comment('Dwight', 'This is exactly the kind of strategic thinking we need. Use it.', '👍')
-    elif st.session_state.template == 'img/collab/collab2.jpg':
+    elif st.session_state.template == 'collab2.jpg':
         votes(votes2[0],votes2[1],votes2[2],votes2[3])
         comment('Toby', 'While this meme is clever, it might come across as unprofessional to some.', '😩')
     else:
