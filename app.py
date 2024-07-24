@@ -220,7 +220,7 @@ def load_image(template_path):
 def generate_meme(template_path, top_text, bottom_text):
     image = load_image(template_path)
     draw = ImageDraw.Draw(image)
-    font_path = "arial.ttf"  # Update this path to your font file if necessary
+    font_path = "Arial.ttf"  # Update this path to your font file if necessary
 
     # Convert text to all caps
     top_text = top_text.upper()
