@@ -157,7 +157,7 @@ def meme_editing():
             time.sleep(1)
     
     with st.form(key='form'):
-        form_top_text = st.text_input("Top Text", value=st.session_state.top_text, )
+        form_top_text = st.text_input("Top Text", value=st.session_state.top_text)
         form_bottom_text = st.text_input("Bottom Text", value=st.session_state.bottom_text)
 
         col10, col11 = st.columns(2)
@@ -174,6 +174,7 @@ def meme_editing():
                 st.session_state.top_text = ''
                 st.session_state.bottom_text = ''
                 st.session_state.template = ''
+                form_top_text = ''
                 st.rerun()
 
     if st.button("Back"):
