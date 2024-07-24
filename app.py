@@ -11,6 +11,7 @@ def load_image(image_path):
 img_folder = "img"
 trending_templates = [os.path.join(img_folder, img) for img in ["grumpy cat.jpg", "awkward penguin.jpg", "philosoraptor.jpg",]]
 favorites_templates = [os.path.join(img_folder, img) for img in ["bernie.jpg", "success kid.jpg"]]
+search_templates = [os.path.join(img_folder, img) for img in ["search/Advice-Dog.jpg", "search/bad-advice-cat.jpg"]]
 
 ai_magic = {
     'img\\bernie.jpg': ['I am once again asking','for you to vote'],
@@ -18,6 +19,8 @@ ai_magic = {
     'img\\awkward penguin.jpg': ['Mailed in my ballot','On November 6th'],
     'img\\philosoraptor.jpg': ['If voting is right','Why does it feel so wrong this year'],
     'img\\success kid.jpg': ['First time voting','Picked the winner'],
+    'img\\search/Advice-Dog.jpg': ['Don\'t forget your','mail in ballot!'],
+    'img\\search/bad-advice-cat.jpg': ['Wait till the last minute','Before reading about the candidates'],
 }
 
 # Main function
@@ -37,6 +40,8 @@ def main():
         st.session_state.bottom_text = ""
     if 'vibe' not in st.session_state:
         st.session_state.vibe = ""
+    if 'searched' not in st.session_state:
+        st.session_state.searched = 0
 
 
     col1, col2 = st.columns([.6,.4])
@@ -67,9 +72,9 @@ def meme_maker(step):
 
 def view_select():
     option = st.selectbox(label='Select Mode',
-        options=['Trending/Context','Vibe', 'Collaboration'])
+        options=['Template Search','Vibe', 'Collaboration'])
     if st.button('Go', type='primary'):
-        if option == 'Trending/Context':
+        if option == 'Template Search':
             st.session_state.step = 1
         elif option == 'Vibe':
             st.session_state.step = 4
@@ -101,8 +106,36 @@ def meme_tempaltes():
             st.session_state.step = 2
             st.session_state.mode = "context"
             st.rerun()
+    
+    # Search your own
+    results = search_templates
+    st.subheader("Search")
+    col60, col61 = st.columns([.7,.3])
+    with col60:
+        search_query = st.text_input(label='Template search', value='advice')
+
+    with col61:
+        st.write(' ')
+        if st.button('Go', type='primary'):
+            if search_query == 'advice':
+                st.session_state.searched = 1
+        
+    if st.session_state.searched == 1:
+        for result in results:
+            st.image(result, use_column_width=True)
+            if st.button(os.path.basename(result), key=result):
+                st.session_state.template = result
+                st.session_state.step = 2
+                st.session_state.mode = "search"
+                st.write(st.session_state.template )
+                st.session_state.searched = 0
+                st.rerun()
+        else:
+            st.write('No results')
+
     if st.button('Back'):
         st.session_state.step = 0
+        st.session_state.searched = 0
         st.rerun()
 
 def meme_editing():
@@ -142,7 +175,9 @@ def meme_editing():
 
     if st.button("Back"):
         st.session_state.step = 1
-        st.experimental_rerun()
+        st.session_state.top_text = ''
+        st.session_state.bottom_text = ''
+        st.rerun()
 
 
 def set_text(top_text, bottom_text):
@@ -342,7 +377,7 @@ def display_comments(votes1, votes2, votes3):
         comment('Dwight', 'This is exactly the kind of strategic thinking we need. Use it.', '👍')
     elif st.session_state.template == 'img/collab/collab2.jpg':
         votes(votes2[0],votes2[1],votes2[2],votes2[3])
-        comment('Toby', 'While this meme is clever, it might come across as unprofessional to some.', '🙁')
+        comment('Toby', 'While this meme is clever, it might come across as unprofessional to some.', '😩')
     else:
         votes(votes3[0],votes3[1],votes3[2],votes3[3])
         st.write('No comments')
@@ -378,7 +413,7 @@ def votes(num_thumbs_up, num_thumbs_down,num_sad, num_comments):
 
     with c:
         st.write(num_sad)
-        st.write('🙁')
+        st.write('😩')
     
     with d:
         st.write(num_comments)
