@@ -379,7 +379,7 @@ def display_comments(votes1, votes2, votes3):
         comment('Dwight', 'This is exactly the kind of strategic thinking we need. Use it.', '👍')
     elif st.session_state.template == 'collab2.jpg':
         votes(votes2[0],votes2[1],votes2[2],votes2[3])
-        comment('Toby', 'While this meme is clever, it might come across as unprofessional to some.', '😩')
+        comment('Toby', 'While this meme is clever, it might come across as unprofessional to some.', '⛔')
     else:
         votes(votes3[0],votes3[1],votes3[2],votes3[3])
         st.write('No comments')
@@ -415,7 +415,7 @@ def votes(num_thumbs_up, num_thumbs_down,num_sad, num_comments):
 
     with c:
         st.write(num_sad)
-        st.write('😩')
+        st.write('⛔')
     
     with d:
         st.write(num_comments)
